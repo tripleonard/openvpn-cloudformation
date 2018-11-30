@@ -8,7 +8,7 @@ This cloudformation creates a personal OpenVPN server in AWS.  I mostly used [th
 You will need the following:
 
 * An ssh key for accessing your EC2 instance
-* An Elastic IP (you will need the AllocationID)
+* An Elastic IP (you will need the AllocationID for the Elastic IP)
     - I added this for convenience (and is in the guide above) so that if I needed to rebuild, I can attach the new EC2 instance to the same IP address.
 * Your VPC's default security group ID
 
