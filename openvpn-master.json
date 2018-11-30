@@ -1,0 +1,107 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "Set up an OpenVPN server",
+    "Metadata": {},
+    "Parameters": {
+        "OpenVpnAmiId": {
+            "Default": "ami-ffd74b87",
+            "Description": "Provide the AWS Marketplace OpenVPN AMI ID",
+            "Type": "AWS::EC2::Image::Id"
+        },
+        "SshKey": {
+            "Description": "Previously created ssh key",
+            "Type": "String"
+        },
+        "InstanceType": {
+            "Default": "t2.nano",
+            "Description": "Instance type",
+            "Type": "String"
+        },
+        "EipAssoAllocationId": {
+            "Description": "Elastic IP AllocationID",
+            "Type": "String"
+        },
+        "VpnSecurityGroupID": {
+            "Description": "The VPC default Security GroupID",
+            "Type": "String"
+        }
+    },
+    "Mappings": {},
+    "Conditions": {},
+    "Resources": {
+        "VpnSecurityGroup": {
+            "Type": "AWS::EC2::SecurityGroup",
+            "Properties": {
+                "GroupDescription": "OpenVPN security group created by cloudformation",
+                "SecurityGroupIngress": [
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 22,
+                        "ToPort": 22,
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 443,
+                        "ToPort": 443,
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "tcp",
+                        "FromPort": 943,
+                        "ToPort": 943,
+                        "CidrIp": "0.0.0.0/0"
+                    }
+                ]
+            }
+        },
+        "OpenVpnInstance": {
+            "Type": "AWS::EC2::Instance",
+            "Properties": {
+                "ImageId": {
+                    "Ref": "OpenVpnAmiId"
+                },
+                "InstanceType": {
+                    "Ref": "InstanceType"
+                },
+                "KeyName": {
+                    "Ref": "SshKey"
+                },
+                "UserData": {
+                    "Fn::Base64": {
+                        "Fn::Join": [
+                            "",
+                            [
+                                "#!/bin/bash -xe\n",
+                                "apt-get update -y\n",
+                                "\n"
+                            ]
+                        ]
+                    }
+                },
+                "SecurityGroupIds": [
+                    {
+                        "Ref": "VpnSecurityGroupID"
+                    }
+                ],
+                "SecurityGroups": [
+                    {
+                        "Ref": "VpnSecurityGroup"
+                    }
+                ]
+            }
+        },
+        "OpenVpnEipAsso": {
+            "Type": "AWS::EC2::EIPAssociation",
+            "Properties": {
+                "AllocationId": {
+                    "Ref": "EipAssoAllocationId"
+                },
+                "InstanceId": {
+                    "Ref": "OpenVpnInstance"
+                }
+            }
+        }
+    },
+    "Outputs": {}
+}
