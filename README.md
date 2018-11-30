@@ -9,7 +9,7 @@ You will need the following:
 
 * An ssh key for accessing your EC2 instance
 * An Elastic IP (you will need the AllocationID)
-    - I added this for convenience so that if I needed to rebuild, I could attach the new EC2 instance to the same IP address.
+    - I added this for convenience (and is in the guide above) so that if I needed to rebuild, I can attach the new EC2 instance to the same IP address.
 * Your VPC's default security group ID
 
 The AMI is the free-tier 2 licence OpenVPN image which is running Ubuntu LTS 16.04.  I have it running on a t2.nano and is about $4/month. It may need be upgraded to a t2.micro, but I am going to try this for a while.
