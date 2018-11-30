@@ -12,6 +12,6 @@ You will need the following:
     - I added this for convenience (and is in the guide above) so that if I needed to rebuild, I can attach the new EC2 instance to the same IP address.
 * Your VPC's default security group ID
 
-The AMI is the free-tier 2 licence OpenVPN image which is running Ubuntu LTS 16.04.  I have it running on a t2.nano and is about $4/month. It may need be upgraded to a t2.micro, but I am going to try this for a while.
+The AMI is the free-tier 2 licence OpenVPN image which is running Ubuntu LTS 16.04.  I have it running on a t2.nano and is about $4/month. It may need be upgraded to a t2.micro as the guide recommends, but I am going to try this for a while.
 
 After the VPN is up and running (no need to document the setup here, you can use the link above), I manually remove the inbound security group rules for port 22 and 943 for increased security.
