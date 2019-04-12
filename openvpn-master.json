@@ -4,7 +4,7 @@
     "Metadata": {},
     "Parameters": {
         "OpenVpnAmiId": {
-            "Default": "ami-ffd74b87",
+            "Default": "ami-0abbb3ceae54aa9fa",
             "Description": "Provide the AWS Marketplace OpenVPN AMI ID",
             "Type": "AWS::EC2::Image::Id"
         },
@@ -17,13 +17,9 @@
             "Description": "Instance type",
             "Type": "String"
         },
-        "EipAssoAllocationId": {
-            "Description": "Elastic IP AllocationID",
-            "Type": "String"
-        },
         "VpnSecurityGroupID": {
             "Description": "The VPC default Security GroupID",
-            "Type": "String"
+            "Type": "AWS::EC2::SecurityGroup::Id"
         }
     },
     "Mappings": {},
@@ -50,6 +46,12 @@
                         "IpProtocol": "tcp",
                         "FromPort": 943,
                         "ToPort": 943,
+                        "CidrIp": "0.0.0.0/0"
+                    },
+                    {
+                        "IpProtocol": "udp",
+                        "FromPort": 1194,
+                        "ToPort": 1194,
                         "CidrIp": "0.0.0.0/0"
                     }
                 ]
@@ -95,7 +97,7 @@
             "Type": "AWS::EC2::EIPAssociation",
             "Properties": {
                 "AllocationId": {
-                    "Ref": "EipAssoAllocationId"
+                    "Fn::ImportValue": "EIPAllocationId"
                 },
                 "InstanceId": {
                     "Ref": "OpenVpnInstance"
@@ -103,5 +105,21 @@
             }
         }
     },
-    "Outputs": {}
+    "Outputs": {
+        "OpenVPNServerAdminURL": {
+            "Description": "OpenVPN Admin URL",
+            "Value": {
+                "Fn::Join": [
+                    "",
+                    [
+                        "https://",
+                        {
+                            "Fn::ImportValue": "EIPAddress"
+                        },
+                        ":943/admin"
+                    ]
+                ]
+            }
+        }
+    }
 }
