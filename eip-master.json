@@ -1,6 +1,6 @@
 {
     "AWSTemplateFormatVersion": "2010-09-09",
-    "Description": "This simply creates a public Elastic IP and exports values",
+    "Description": "This simply creates a public Elastic IP and exports useful attributes",
     "Metadata": {},
     "Parameters": {},
     "Mappings": {},
@@ -19,7 +19,7 @@
                 "Fn::GetAtt": [ "MyEIP", "AllocationId" ]
             },
             "Export":{
-                "Name": "MyEIP::AllocationId"
+                "Name": "EIPAllocationId"
             }
         },
         "MyEIPAddress": {
@@ -28,7 +28,7 @@
                 "Ref": "MyEIP"
             },
             "Export":{
-                "Name": "EIP::Address"
+                "Name": "EIPAddress"
             }
         }
     }
