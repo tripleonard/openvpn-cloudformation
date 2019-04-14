@@ -1,9 +1,9 @@
 Launch EC2 Instance with OpenVPN
 ================================
 
-Here be dragons: All of this is as of this writing (Nov 29 2018), and things evolve quickly in AWS.
+Here be dragons: All of this is as of this writing, and things evolve quickly in AWS.
 
-This cloudformation creates a personal OpenVPN server in AWS.  I mostly used [this super helpful guide](https://medium.com/@tatianaensslin/how-to-create-a-free-personal-vpn-in-the-cloud-using-ec2-openvpn-626c40e96dab) as my reference, and assume a cursory understanding of AWS, Cloudformation and EC2.
+This cloudformation creates a personal OpenVPN server in AWS.  I mostly used [this super helpful guide](https://medium.com/@tatianaensslin/how-to-create-a-free-personal-vpn-in-the-cloud-using-ec2-openvpn-626c40e96dab) as my reference, and a bit from the [offical ec2 openvpn guide](https://openvpn.net/vpn-server-resources/amazon-web-services-ec2-tiered-appliance-quick-start-guide/).  I also assume a cursory understanding of AWS, Cloudformation and EC2.
 
 You will need the following:
 
