@@ -8,9 +8,17 @@
             "Description": "Provide the AWS Marketplace OpenVPN AMI ID",
             "Type": "AWS::EC2::Image::Id"
         },
-        "SshKey": {
-            "Description": "Previously created ssh key",
+        "AdminUserName": {
+            "Default": "openvpn",
+            "Description": "OpenVPN Admin User",
             "Type": "String"
+        },
+        "AdminPassword": {
+            "Description": "OpenVPN Admin Password",
+            "Type": "String",
+            "NoEcho": true,
+            "MinLength": 8,
+            "MaxLength": 32
         },
         "InstanceType": {
             "Default": "t2.nano",
@@ -66,9 +74,6 @@
                 "InstanceType": {
                     "Ref": "InstanceType"
                 },
-                "KeyName": {
-                    "Ref": "SshKey"
-                },
                 "UserData": {
                     "Fn::Base64": {
                         "Fn::Join": [
@@ -76,6 +81,22 @@
                             [
                                 "#!/bin/bash -xe\n",
                                 "apt-get update -y\n",
+                                "public_hostname=",
+                                {
+                                    "Fn::ImportValue": "EIPAddress"
+                                },
+                                "\n",
+                                "admin_user=",
+                                {
+                                    "Ref": "AdminUserName"
+                                },
+                                "\n",
+                                "admin_pw=",
+                                {
+                                    "Ref": "AdminPassword"
+                                },
+                                "\n",
+                                "reroute_gw=1\n",
                                 "\n"
                             ]
                         ]
