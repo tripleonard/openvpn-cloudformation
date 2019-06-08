@@ -135,6 +135,12 @@
                     ]
                 ]
             }
+        },
+        "VpnInstanceId": {
+            "Description": "ID of VPN Instance",
+            "Value": {
+                "Ref": "OpenVpnInstance"
+            }
         }
     }
 }
